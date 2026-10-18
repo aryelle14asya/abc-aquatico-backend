@@ -1,7 +1,3 @@
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
-
 const express = require('express');
 const cors = require('cors');
 
@@ -19,8 +15,12 @@ app.use('/loja', require('./routes/loja'));
 app.use('/contratos', require('./routes/contratos'));
 app.use('/notificacoes', require('./routes/notificacoes'));
 
-app.get('/', (req, res) => res.json({ status: '✅ ABC Aquático API online!' }));
+app.get('/', (req, res) => res.json({ 
+  status: '✅ ABC Aquático API online!',
+  db: process.env.DATABASE_URL ? 'conectado' : 'sem variável'
+}));
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(`✅ Servidor rodando na porta ${process.env.PORT || 3000}`);
+  console.log(`DATABASE_URL: ${process.env.DATABASE_URL ? 'OK' : 'NÃO ENCONTRADA'}`);
 });
